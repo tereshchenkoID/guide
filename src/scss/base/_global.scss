@@ -1,0 +1,103 @@
+@use 'scss/config' as *;
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+body {
+  @include smooth-font;
+
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  font-weight: var(--typography-thin);
+  line-height: var(--line-height);
+  overflow-y: auto;
+  color: var(--color-text);
+}
+
+button {
+  @include reset-button;
+}
+
+button,
+a,
+.a {
+  @include transition(all);
+
+  font-weight: var(--typography-thin);
+}
+
+a,
+.a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+
+  &:active,
+  &:hover {
+    color: var(--color-accent);
+  }
+}
+
+p {
+  @include make-spacer(p, 0);
+  @include make-spacer(m, 0);
+}
+
+ul,
+ol {
+  @include reset-list;
+}
+
+hr {
+  @include make-spacer(my, 0);
+  @include size(100%, rem(1px));
+
+  display: block;
+  border: 0;
+  background-color: var(--color-text);
+}
+
+picture {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.main {
+  position: relative;
+}
+
+.container-fluid {
+  width: 100%;
+}
+
+.container {
+  @include make-spacer(mx, auto);
+  @include make-spacer(px, 20px);
+
+  border: rem(1px) solid rgba(112, 44, 249, 0.3);
+  background-color: rgba(112, 44, 249, 0.15);
+
+  @include media-breakpoint-up(sm) {
+    max-width: rem(540px);
+  }
+
+  @include media-breakpoint-up(md) {
+    max-width: rem(720px);
+  }
+
+  @include media-breakpoint-up(lg) {
+    max-width: rem(960px);
+  }
+
+  @include media-breakpoint-up(xl) {
+    max-width: rem(1140px);
+  }
+
+  @include media-breakpoint-up(xxl) {
+    max-width: rem(1320px);
+  }
+}

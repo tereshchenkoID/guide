@@ -1,0 +1,33 @@
+extends ../generate/layout/_layout
+
+block title
+  - var title = "Index"
+
+block content
+  main.main
+    .container-fluid
+      .container
+        p .container
+      .container
+        h1= title
+        h2= title
+        h3= title
+        h4= title
+        h5= title
+        h6= title
+      .container
+        +button('Button')
+      .container
+        +image(
+          [
+            './img/logo-1.webp 375px',
+            './img/logo-1.webp 640px',
+            './img/logo-1.webp 960px'
+          ],
+          [
+            '375 375',
+            '640 640',
+            '960 960',
+          ],
+          'Text'
+        )

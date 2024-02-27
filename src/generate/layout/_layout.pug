@@ -1,0 +1,15 @@
+include ../components/index
+include ../sections/index
+include ../partials/index
+
+include _head
+
+block title
+  title My Website
+
+doctype html
+html(lang="en")
+  head
+    +head(title)
+  body
+    block content

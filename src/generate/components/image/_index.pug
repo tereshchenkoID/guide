@@ -1,0 +1,15 @@
+mixin image(srcset, sizes, alt)
+  picture
+    each src, index in srcset
+      source(
+        media=`(max-width: ${src.split(' ')[1]})`
+        srcset=src.split(' ')[0]
+        width=sizes[index].split(' ')[0]
+        height=sizes[index].split(' ')[1]
+      )
+    img.image(
+      src=srcset[0].split(' ')[0]
+      alt=alt
+      width=sizes[sizes.length - 1].split(' ')[1]
+      height=sizes[sizes.length - 1].split(' ')[1]
+    )

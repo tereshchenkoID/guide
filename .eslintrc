@@ -1,0 +1,32 @@
+{
+  "parser": "@babel/eslint-parser",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "plugins": [
+    "dollar-sign",
+    "import"
+  ],
+  "extends": [
+    "airbnb-base",
+    "eslint:recommended"
+  ],
+  "parserOptions": {
+    "requireConfigFile": false,
+    "ecmaVersion": 8
+  },
+  "rules": {
+    "dollar-sign/dollar-sign": [2, "ignoreProperties"],
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-unused-vars": "error",
+    "no-param-reassign": ["off"],
+    "no-console": ["warn"],
+    "max-len": ["error", {"code": 140}],
+    "no-var": "error",
+    "semi": [0, "always"],
+    "rest-spread-spacing": "off",
+    "import/resolver": 0,
+    "import/no-extraneous-dependencies": 0
+  }
+}
