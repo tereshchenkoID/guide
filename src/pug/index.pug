@@ -1,33 +1,522 @@
 extends ../generate/layout/_layout
 
 block title
-  - var title = "Index"
+  - var title = "Guide"
 
 block content
-  main.main
-    .container-fluid
-      .container
-        p .container
-      .container
-        h1= title
-        h2= title
-        h3= title
-        h4= title
-        h5= title
-        h6= title
-      .container
-        +button('Button')
-      .container
-        +image(
-          [
-            './img/logo-1.webp 375px',
-            './img/logo-1.webp 640px',
-            './img/logo-1.webp 960px'
-          ],
-          [
-            '375 375',
-            '640 640',
-            '960 960',
-          ],
-          'Text'
-        )
+    +header(style="background-image: url('./img/header.webp')")
+    main.main
+        section.section
+            .container-fluid
+                .container
+                    h2 Contents
+                    +menu
+
+        section.section(id="page-3")
+            .container-fluid
+                .container
+                    .grid
+                        .grid__item
+                            h2 Introduction
+                            p Welcome to the guide for the API of ONEPlatform. If you’re here, it’s likely that you’re interested in integrating our product with your own software or service. ONEPlatform is a powerful tool that enables you to access a wide range of video content through a single RESTful API. With this guide, you’ll learn how to connect to our API and start using our services in your own applications. 
+                            p Our API is designed to be easy to use and flexible, allowing you to access the full range of features and services that ONEPlatform has to offer. Whether you’re building a new application from scratch or integrating with an existing system, our API makes it easy to get started. 
+                            p this guide, we’ll walk you through the process of getting started with the ONEPlatform API, from setting up your account and obtaining your API keys, to making your first API call and accessing the full range of content available to you. So, let’s get started!
+            +page(3)
+
+        section.section(id="page-4")
+            .container-fluid
+                .container
+                    .grid.grid--2
+                        .grid__item
+                            .grid__description
+                                p In order to integrate with iGameMedia’s streaming services, iGame requires each client to pass the correct access details to our ONEPlatform API.
+                                p The below details should be used for accessing event info and streaming content:
+                        .grid__item
+                            .grid__description
+                                p The below details should be used for accessing event info and streaming content:
+                                .grid__input
+                                    label(for="partner_name").label Partner Name
+                                    input(type="text" id="partner_name").input
+                                .grid__input
+                                    label(for="customer").label CustomerUID
+                                    input(type="text" id="customer").input
+                                .grid__input
+                                    label(for="whitelisted").label Whitelisted IP’s
+                                    input(type="text" id="whitelisted").input  
+                                strong
+                                    span.accent Note: 
+                                    | Please do not disclose your Customer GUID to any third party. Disclosure of this information could jeopardize the security of your integration with iGameMedia.
+            +page(4)
+
+        section.section(id="page-5")
+            .container-fluid
+                .container
+                    .description
+                        h2 API Developer Guide
+                    .grid.grid--2
+                        .grid__item
+                            .grid__description
+                                h6 Getting Started 
+                                p This document will familiarise you with the APIs and associated methods required to integrate live iGame Media video streaming content into your website.
+                                p 
+                                    strong.accent Note: 
+                                    | This API does not deliver the video stream itself - it only tells you what the URL for a given stream will be. You will need to connect to the video stream separately or via our player.
+                                p (Please discuss with us, if your intention is to use our player)  
+
+                        .grid__item
+                            .grid__description
+                                h6 What you will need before you start
+                                ul
+                                    li A link to swagger UI
+                                    li Your CustomerUID for the service – This is a unique GUID used for authorisation on our APIs
+                                    li A list of the IP addresses you intend to call our services from so we can whitelist them.
+                                    li A list of response codes found in section 7 of this document.
+                                p Please contact 
+                                    a(mai:lto="support@igamemedia.com").accent support@igamemedia.com 
+                                    | if you have not yet received this information.
+                        
+                        .grid__item
+                            .grid__description
+                                h6 API Domain Name
+                                p
+                                    strong For Test
+                                a(href="https://stream-services-test.igamemedia.com/api").accent https://stream-services-test.igamemedia.com/api
+                                p
+                                    strong For Production
+                                a(href="https://stream-services-test.igamemedia.com/api").accent https://stream-services-test.igamemedia.com/api
+
+                        .grid__item
+                            .grid__description
+                                h6 Date Format
+                                p All Date objects are returned in the UTC time zone, using the ISO 8601 combined format. For more information about ISO 8601, please see 
+                                    a(href="https://en.wikipedia.org/wiki/ISO_86015.").accent https://en.wikipedia.org/wiki/ISO_86015.
+            +page(5)
+
+        section.section(id="page-6")
+            .container-fluid
+                .container
+                    .description
+                        h2 Events 
+                    .grid.grid--2
+                        .grid__item
+                            .grid__description
+                                h6 Get Event
+                                p This method call will return all events for a particular date.
+                            .grid__description
+                                h6 Request Parameters 
+                                p Please review the section "Getting Started" for more information
+                                p 
+                                    strong.accent customerUid: 
+                                    | Your company’s identifier. This is provided to you by iGame.
+                                p 
+                                    strong.accent eventDate: 
+                                    |  Date of the event. Date passed with format "DD-MM-YYYY"
+
+                        .grid__item
+                            .grid__description
+                                h6 Response Model
+                                code
+                                    |{
+                                    |  "events": [
+                                    |    {
+                                    |       "eventId": "",
+                                    |       "locationCode": "",
+                                    |       "locationName": "",
+                                    |       "sportCode": "",
+                                    |       "eventStatusCode": "",
+                                    |       "eventNumber": "",
+                                    |       "title": "",
+                                    |       "startTime": "",
+                                    |       "estimatedEndTime": "",
+                                    |       "geoAllow": "",
+                                    |       "geoBlock": ""
+                                    |    }
+                                    |  ]
+                                    |}
+
+                            .grid__description
+                                h6 Response Example
+                                p
+                                    strong.accent curl -XGET -H "Content-type: application/json" ‘https://stream-services-test.igamemedia.com/api/event/all/{customerUid}/{eventDate}’
+                                code
+                                    |{
+                                    |  "events": [
+                                    |    {
+                                    |       "eventId": "013WOFT640-32325",
+                                    |       "locationCode": "013WOFT640",
+                                    |       "locationName": "Dutch Eredivisie 2015",
+                                    |       "sportCode": "FT",
+                                    |       "eventStatusCode": "P",
+                                    |       "eventNumber": "32325",
+                                    |       "title": "NEC v FC Twente",
+                                    |       "startTime": "2020-11-09T:00:00:00"
+                                    |       "estimatedEndTime": "2020-11-09T:02:00:00",
+                                    |       "geoAllow": "GB,IE",
+                                    |       "geoBlock": ""
+                                    |    }
+                                    |  ]
+                                    |}
+                    
+                    .grid.grid--2
+                        .grid__item
+                            .grid__description
+                                h6 Get Event that are Open
+                                p This method call will return all events for a particular date that are open. You can then use one of these event ID’s to generate a token by calling a token service.
+                            .grid__description
+                                h6 Request Parameters
+                                p Please review the section "Getting Started" for more information.
+                                p 
+                                    strong.accent customerUid: 
+                                    |  Your company’s identifier. This is provided to you by iGame.
+
+                        .grid__item 
+                            .grid__description
+                                h6 Response Model
+                                code
+                                    |{
+                                    |  "events": [
+                                    |    {
+                                    |       "eventId": "",
+                                    |       "locationCode": "",
+                                    |       "locationName": "",
+                                    |       "sportCode": "",
+                                    |       "eventStatusCode": "",
+                                    |       "eventNumber": "",
+                                    |       "title": "",
+                                    |       "startTime": "",
+                                    |       "estimatedEndTime": "",
+                                    |       "geoAllow": "",
+                                    |       "geoBlock": ""
+                                    |    }
+                                    |  ]
+                                    |}
+
+                            .grid__description
+                                h6 Response Example
+                                p
+                                    strong.accent curl -XGET -H "Content-type: application/json" ‘https://stream-services-test.igamemedia.com/api/event/all/{customerUid}/{eventDate}’
+                                code
+                                    |{
+                                    |  "events": [
+                                    |    {
+                                    |       "eventId": "013WOFT640-32325",
+                                    |       "locationCode": "013WOFT640",
+                                    |       "locationName": "Dutch Eredivisie 2015",
+                                    |       "sportCode": "FT",
+                                    |       "eventStatusCode": "P",
+                                    |       "eventNumber": "32325",
+                                    |       "title": "NEC v FC Twente",
+                                    |       "startTime": "2020-11-09T:00:00:00"
+                                    |       "estimatedEndTime": "2020-11-09T:02:00:00",
+                                    |       "geoAllow": "GB,IE",
+                                    |       "geoBlock": ""
+                                    |    }
+                                    |  ]
+                                    |}  
+            +page(6)
+
+        section.section(id="page-7")
+            .container-fluid
+                .container
+                    .description
+                        h2 Streaming
+                        p Platform management providers have only one integration to manage. Our fully dedicated iGame team with decades of experience is always ready to troubleshoot and manage day to day schedules, code changes and event mapping.
+                    
+                    .grid.grid--2
+                        .grid__item
+                            .grid__description
+                                h6 Get Streams for Events
+                                p This method will return all available streams for a specific event. We provide HLS streams for all content but iGame Media also provides the industry’s first HESP ultra-low latency streams for select content.
+                                p -HLS
+                                p -ULL
+
+                            .grid__description
+                                h6 Request Parameters
+                                p Please review the section "Getting Started" for more information.
+                                p 
+                                    strong.accent customerUid: 
+                                    | Your company’s identifier. This is provided to you by iGame.
+                                p 
+                                    strong.accent eventId: 
+                                    | ID of specific event you wish to stream.
+
+                        .grid__item
+                            .grid__description
+                                h6 Response Model
+                                code
+                                    |{
+                                    |  "events": [
+                                    |    {
+                                    |       "eventId": "",
+                                    |       "locationCode": "",
+                                    |       "locationName": "",
+                                    |       "sportCode": "",
+                                    |       "eventStatusCode": "",
+                                    |       "eventNumber": "",
+                                    |       "title": "",
+                                    |       "startTime": "",
+                                    |       "estimatedEndTime": "",
+                                    |       "geoAllow": "",
+                                    |       "geoBlock": ""
+                                    |    }
+                                    |  ]
+                                    |}
+
+                            .grid__description
+                                h6 Response Example
+                                p
+                                    strong.accent curl -XGET -H "Content-type: application/json" ‘https://stream-services-test.igamemedia.com/api/event/all/{customerUid}/{eventDate}’
+                                code
+                                    |{
+                                    |  "events": [
+                                    |    {
+                                    |       "eventId": "013WOFT640-32325",
+                                    |       "locationCode": "013WOFT640",
+                                    |       "locationName": "Dutch Eredivisie 2015",
+                                    |       "sportCode": "FT",
+                                    |       "eventStatusCode": "P",
+                                    |       "eventNumber": "32325",
+                                    |       "title": "NEC v FC Twente",
+                                    |       "startTime": "2020-11-09T:00:00:00"
+                                    |       "estimatedEndTime": "2020-11-09T:02:00:00",
+                                    |       "geoAllow": "GB,IE",
+                                    |       "geoBlock": ""
+                                    |    }
+                                    |  ]
+                                    |} 
+
+                    .grid.grid--2
+                        .grid__item
+                            .grid__description
+                                h6 Generate Event View 
+                                p Return Raw Link
+                                p This method is used to return the raw link as provided to us by our data providers. This allows you the flexibility to use this raw link within your own player and native apps.
+                            .grid__description    
+                                h6 Request Parameters
+                                p Please review the section "Getting Started" for more information.
+                                p 
+                                    strong.accent customerUid: 
+                                    | Your company’s identifier. This is provided to you by iGame
+                                p 
+                                    strong.accent userId: 
+                                    | Unique identifier for end-user
+                                p 
+                                    strong.accent userIp: 
+                                    | IP address of end-user
+                                p 
+                                    i.accent Note: 
+                                    | For server-side calls please specify enduser IP in ‘X-Forwarded-For’ header
+                                p 
+                                    strong.accent eventId: 
+                                    | ID of specific event you wish to stream.
+                                p 
+                                    strong.accent streamName: 
+                                    | This value can be found by getting the list of streams for event.
+                                p 
+                                    i.accent Note: 
+                                    |  Please append "-RAW" to end of UniqueStreamName e.g. "HLS-RAW"
+                                p 
+                                    strong.accent redirectUrl
+                                    |   This will be the page the user is redirected to when the event is over.
+                        .grid__item
+                            .grid__description
+                                h6 Request Model
+                                code
+                                    |{
+                                    |    "customerUid": "",
+                                    |    "userId": "",
+                                    |    "eventId": "",
+                                    |    "userIp": "",
+                                    |    "streamName": "",
+                                    |    "redirectUrl": ""
+                                    |}
+
+                            .grid__description
+                                h6 Response Model
+                                code
+                                    |{
+                                    |    "streamLink": "",
+                                    |    "streamType": "",
+                                    |    "provider": ""
+                                    |}
+                            .grid__description
+                                h6 Response Example
+                                p
+                                    strong.accent curl -XPOST -H "Content-type: application/json" ‘https://stream-services-test.igamemedia.com/api/stream/link?customerUid={customerUid}&userId={userId}&userIp={userIp}&eventId={eventId}&streamName={streamName}&redirectURL={redirectURL}’        
+                                code
+                                    |{
+                                    |    "streamLink": "https://player-test.igamemedia.com/liveplayer?tid=10001&tk=2bde432b26f1734a1b787146e4adf735b76eab2eefd36a732c5c270d701d7ea08699",
+                                    |    "streamType": "HLS",
+                                    |    "provider": "IGM"
+                                    |}
+                                p 
+                                    strong.accent Note: 
+                                    | When returning an available ULL stream, the relevant Theo channel id will be returned in the streamLink field.
+                            .grid__description
+                                h6 Using Player Link
+                                p To use our player link, the following example is shown using iframe:
+                                strong.accent 
+                                    | https://player-test.igamemedia.com/liveplayer?tid=10001&k=2bde432b26f1734a1b787146e4adf735b76eab2eefd36a732c5c270d7"
+            +page(7)
+
+        section.section(id="page-8")
+            .container-fluid
+                .container
+                    .description
+                        h2 Error Codes
+                    .grid.grid--2
+                        .grid__item
+                            .grid__description
+                                h6 REST Response Codes
+                                p REST APIs use the Status-Line part of an HTTP response message to inform clients of their request’s overarching result. The following are the operation codes used in the ONEPlatform API:
+                        .grid__item
+                            table
+                                thead
+                                    tr
+                                        th Status Codes 
+                                        th Description
+                                tbody
+                                    tr
+                                        td 200
+                                        td 200 Successful Request
+                                    tr
+                                        td 400
+                                        td 400 Bad Request - Verify that query parameters are correct
+                                    tr
+                                        td 500
+                                        td 500 Internal Server Error
+                        .grid__item
+                            .grid__description
+                                p All methods response models contain the fields:
+                                code
+                                    |{
+                                    |    "message": "string",
+                                    |    "operationCode": "int"
+                                    |}  
+                        .grid__item
+                        .grid__item
+                            .grid__description
+                                p 
+                                    | The 
+                                    strong.accent operationCode 
+                                    | is the custom status code and message is the description of this code. The following are the custom status codes used in the ONEPlatform API:
+                        .grid__item
+                            table
+                                thead
+                                    tr
+                                        th Status Codes 
+                                        th Description
+                                tbody
+                                    tr
+                                        td 300
+                                        td Your customer details are invalid, please contact support. This could mean your customerUid is invalid.
+                                    tr
+                                        td 301
+                                        td You must supply a valid IP Address for your end user. When generating a token to view an event, you must supply the end users IP address.
+                                    tr
+                                        td 302
+                                        td You must supply a valid User Identifier. When generating a token to view an event, you must supply the end users identifier or something that uniquely identifies the user.
+                                    tr
+                                        td 303
+                                        td Calls from this Server are not allowed. This means you have not sent through the IP address of the server that is calling our web services.
+                                    tr
+                                        td 304
+                                        td The Unique Stream Name is invalid. Each event will have a list of streams associated with it, in order to view the stream please send through the correct unique stream name. You can get a list of the stream names by calling the “GetStreamsForEvent” in the Token service.    
+                                    tr
+                                        td 305
+                                        td The Redirect URL is invalid. A valid URL must contain the http or https protocol.
+                                    tr
+                                        td 306
+                                        td This event is unavailable in the requesting user’s region.
+                                    tr
+                                        td 307
+                                        td Unable to get stream link from external provider
+                                    tr
+                                        td 308
+                                        td Invalid value of encoded transaction reference
+                                    tr
+                                        td 401
+                                        td Event not found. The eventId that you have sent through cannot be found.
+                                    tr
+                                        td 402
+                                        td Event is still pending.
+                                    tr
+                                        td 403
+                                        td Event is now closed.
+                                    tr
+                                        td 404
+                                        td Event is cancelled. You can only generate a token if the Event is Open and the Event Status Code is O.
+            +page(8)
+
+        section.section(id="page-9")
+            .container-fluid
+                .container
+                    .description
+                        h2 Sports
+                    .grid.grid--2
+                        .grid__item
+                            .grid__description
+                                h6 Retrieve All Sports
+                                p You can retrieve a list of sports and their codes.
+                                h6 Request Parameters
+                                p 
+                                    strong.accent customerUid: 
+                                    | Your company’s identifier. This is provided to you by iGame.
+                        .grid__item
+                            .grid__description
+                                h6 Response Model
+                                code 
+                                    |{
+                                    |    "Sports": [
+                                    |        {
+                                    |            "Code": "",
+                                    |            "Name": ""
+                                    |        }
+                                    |    ]
+                                    |}
+                            .grid__description
+                                h6 Response Example
+                                p
+                                    strong.accent curl -XGET -H “Content-type: application/json” ‘https://stream-services-test.igamemedia.com/api/sport/all/{customerUid}’
+                                code 
+                                    |{
+                                    |    "Sports": [
+                                    |        {
+                                    |            "Code": "HR",
+                                    |            "Name": "Horse Racing"
+                                    |        }
+                                    |    ]
+                                    |}
+            +page(9)    
+
+        section.section(id="page-10")
+            .container-fluid
+                .container    
+                    .grid
+                        .grid__description
+                            h6 Sports Codes
+                            table
+                                thead
+                                    tr
+                                        th Code
+                                        th Sport
+                                        th Code
+                                        th Sport
+                                        th Code
+                                        th Sport
+                                        th Code
+                                        th Sport
+                                tbody
+                                    - var n = 0
+                                    while n < 30 
+                                        tr(data-id=n++)
+                                            td AS
+                                            td Alpine Skiing
+                                            td EQ
+                                            td Equestrian
+                                            td HI
+                                            td Indoor Hockey
+                                            td RG
+                                            td Rugby
+            +page(10)    
+    +footer

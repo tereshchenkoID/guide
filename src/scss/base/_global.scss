@@ -4,6 +4,11 @@
 ::after,
 ::before {
   box-sizing: border-box;
+  word-break: break-all;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -12,6 +17,7 @@ body {
   font-family: var(--font-family);
   font-size: var(--font-size);
   font-weight: var(--typography-thin);
+  -webkit-font-smoothing: antialiased;
   line-height: var(--line-height);
   overflow-y: auto;
   color: var(--color-text);
@@ -22,15 +28,13 @@ button {
 }
 
 button,
-a,
-.a {
+a {
   @include transition(all);
 
   font-weight: var(--typography-thin);
 }
 
-a,
-.a {
+a {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
@@ -39,16 +43,25 @@ a,
   &:hover {
     color: var(--color-accent);
   }
+
+  &:focus {
+    outline-color: var(--color-accent);
+  }
 }
 
+a,
 p {
   @include make-spacer(p, 0);
-  @include make-spacer(m, 0);
+  @include make-spacer(my, var(--gap));
 }
 
 ul,
 ol {
   @include reset-list;
+}
+
+ul {
+  list-style: inside;
 }
 
 hr {
@@ -66,20 +79,84 @@ picture {
   height: auto;
 }
 
+code {
+  @include make-spacer(my, var(--gap));
+  @include make-spacer(p, var(--gap));
+
+  display: block;
+  font-family: monospace;
+  font-size: rem(14px);
+  font-weight: var(--typography-bold);
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+  white-space: break-spaces;
+  word-spacing: normal;
+  word-break: break-all;
+  color: var(--color-white);
+  background-color: var(--color-black);
+  tab-size: 4;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  font-size: rem(12px);
+  background-color: var(--color-border);
+}
+
+th, 
+td {
+  @include make-spacer(py, 4px);
+  @include make-spacer(px, 8px);
+  
+  min-width: rem(150px);
+  text-align: left;
+}
+
+tr {
+  font-size: rem(14px);
+
+  &:nth-child(even) {
+    background-color: var(--color-border);
+  }
+}
+
 .main {
   position: relative;
 }
 
+.section {
+  @include flex($justify-content: center, $direction: column);
+
+  min-height: 100dvh;
+
+  &:nth-child(even) {
+    color: var(--color-white);
+    background-color: var(--color-black);
+
+    code {
+      color: var(--color-text);
+      background-color: var(--color-white);
+    }
+  }
+}
+
 .container-fluid {
+  @include make-spacer(py, 60px);
+  @include flex($align-items: center);
+
+  flex-grow: 1;
   width: 100%;
 }
 
 .container {
   @include make-spacer(mx, auto);
-  @include make-spacer(px, 20px);
-
-  border: rem(1px) solid rgba(112, 44, 249, 0.3);
-  background-color: rgba(112, 44, 249, 0.15);
+  @include make-spacer(px, var(--gap));
+  
+  width: 100%;
 
   @include media-breakpoint-up(sm) {
     max-width: rem(540px);
@@ -99,5 +176,47 @@ picture {
 
   @include media-breakpoint-up(xxl) {
     max-width: rem(1320px);
+  }
+}
+
+.description {
+  max-width: rem(600px);
+}
+
+.grid {
+  display: grid;
+  gap: var(--gap);
+
+  &__description,
+  &__input {
+    @include make-spacer(my, var(--gap));
+  }
+
+  &--2 {
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+.accent {
+  color: var(--color-accent)
+}
+
+.label {
+  display: block;
+  font-size: rem(14px)
+}
+
+.input {
+  @include transition;
+  @include make-spacer(px, 12px);
+  @include size(100%, rem(40px));
+
+  border: rem(1px) solid var(--color-border);
+
+  &:focus {
+    border-color: var(--color-accent);
+    outline: none;
   }
 }

@@ -16,7 +16,7 @@ h3,
 h4,
 h5,
 h6 {
-  @include make-spacer(m, 0);
+  @include make-spacer(my, var(--gap));
 
   font-weight: var(--typography-medium);
 }

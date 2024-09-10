@@ -1,0 +1,43 @@
+@use 'scss/config' as *;
+
+.menu {
+  @include make-spacer(p, 0);
+  @include make-spacer(m, 0);
+
+  &__link {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: rem(8px);
+
+    &:first-child {
+      color: var(--color-accent);
+    }
+  }
+
+  &__list {
+
+    &:not(:last-child) {
+      @include make-spacer(mb, 12px);
+    }
+  }
+
+  &__link {
+    @include make-spacer(my, 0);
+
+    span {
+
+      &:nth-child(1) {
+        @include flex($align-items: baseline);
+
+        gap: rem(8px);
+
+        &::after {
+          height: rem(1px);
+          flex-grow: 1;
+          background-image: repeating-linear-gradient(to right, transparent, transparent 1px, black 1px, var(--color-text) 2px);
+          content: '';
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+@use 'scss/config' as *;
+
+.header {
+  @include make-spacer(py, 60px);
+  @include flex;
+
+  min-height: 100dvh;
+  background-size: cover;
+  background-color: var(--color-black);
+  color: var(--color-white);
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    content: '';
+  }
+
+  * {
+    position: relative;
+  }
+}

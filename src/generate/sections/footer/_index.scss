@@ -1,0 +1,27 @@
+@use 'scss/config' as *;
+
+.footer {
+  @include make-spacer(py, 60px);
+
+  background-color: var(--color-black);
+  color: var(--color-white);
+
+  &__logo {
+    @include make-spacer(mb, 16px);
+
+    max-width: 300px;
+    height: auto;
+  }
+
+  &__list {
+    list-style: none;
+
+    li {
+      font-size: rem(14px);
+    }
+  }
+
+  &__content {
+    max-width: rem(600px);
+  }
+}

@@ -1,0 +1,17 @@
+@use 'scss/config' as *;
+
+.page {
+  @include make-spacer(mt, auto);
+  @include make-spacer(mb, 0);
+  @include make-spacer(p, var(--gap));
+  
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  font-size: rem(14px);
+  letter-spacing: rem(0.5px);
+  
+  &__meta {
+    @include flex($direction: column);
+  }
+}

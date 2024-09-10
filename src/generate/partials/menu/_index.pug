@@ -1,0 +1,108 @@
+- 
+  var menu = [
+    [
+      {
+        text: 'Introduction',
+        link: '#page-3',
+        page: 3
+      },
+      {
+        text: 'Content Access',
+        link: '#page-4',
+        page: 4
+      }
+    ],
+    [
+      {
+        text: 'API Developer Guide',
+        link: '#page-5',
+        page: 5
+      },
+      {
+        text: 'Getting Started',
+        link: '/',
+        page: 5
+      },
+      {
+        text: 'Date Format',
+        link: '/',
+        page: 5
+      }
+    ],
+    [
+      {
+        text: 'Events',
+        link: '#page-6',
+        page: 6
+      },
+      {
+        text: 'Get Event',
+        link: '/',
+        page: 6
+      },
+      {
+        text: 'Get Event that are Open',
+        link: '/',
+        page: 6
+      }
+    ],
+    [
+      {
+        text: 'Streaming',
+        link: '#page-7',
+        page: 7
+      },
+      {
+        text: 'Get Streams for Events',
+        link: '/',
+        page: 7
+      },
+      {
+        text: 'Return Raw Link',
+        link: '/',
+        page: 7
+      },
+      {
+        text: 'Return Player Link',
+        link: '/',
+        page: 7
+      }
+    ],
+    [
+      {
+        text: 'Error Codes',
+        link: '#page-8',
+        page: 8
+      },
+      {
+        text: 'Rest Response Codes',
+        link: '#page-8',
+        page: 8
+      }
+    ],
+    [
+      {
+        text: 'Sports',
+        page: 8
+      },
+      {
+        text: 'Retrieve All Sports',
+        link: '#page-9',
+        page: 9
+      },
+      {
+        text: 'Sports Codes',
+        link: '#page-10',
+        page: 10
+      }
+    ]
+  ]
+
+mixin menu
+  menu.menu&attributes(attributes)
+    each item in menu
+      .menu__list
+        each link in item
+          a(href=link.link).menu__link
+            span= link.text
+            span= link.page
